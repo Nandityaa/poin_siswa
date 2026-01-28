@@ -1,19 +1,25 @@
 <?php
-// config/config.php
+// Mengecek apakah server dijalankan secara lokal (localhost)
+if ($_SERVER['REMOTE_ADDR'] == '127.0.0.1' || $_SERVER['REMOTE_ADDR'] == '::1') {
 
-// Database
-$db_host = "localhost";
-$db_user = "root";
-$db_pass = "";
-$db_name = "poin_pelanggaran_siswa1";
+    // Jika dijalankan di komputer lokal, gunakan konfigurasi lokal
+    $host = "localhost";        // Alamat server database lokal
+    $user = "root";             // Username MySQL lokal
+    $password = ""; // Password MySQL lokal secara default password kosong
+    $database = "poin_pelanggaran_siswa"; // Nama database lokal
 
-$conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
-if ($conn->connect_error) {
-    die("Koneksi DB gagal: " . $conn->connect_error);
+} else {
+    // Jika dijalankan di jaringan (bukan localhost), gunakan konfigurasi server
+    $host = "192.168.0.249";    // IP server database di jaringan
+    $user = "root";             // Username MySQL di server
+    $password = "password";     // Password MySQL di server
+    $database = "Poin_Pelanggaran_Siswa"; // Nama database di server
 }
 
-$base_url = "/poin_siswakita";
+// Membuat koneksi ke database menggunakan konfigurasi di atas
+$conn = mysqli_connect($host, $user, $password, $database);
+if (!$conn) {
+    die("Koneksi database gagal: " . mysqli_connect_error());
+}
 
-// timezone
-date_default_timezone_set("Asia/Makassar");
 ?>
