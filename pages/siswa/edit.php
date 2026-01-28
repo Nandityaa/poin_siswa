@@ -12,8 +12,14 @@ $query_kelas = "SELECT kelas.id_kelas, tingkat.tingkat, program_keahlian.program
                 ORDER BY tingkat.tingkat ASC, program_keahlian.program_keahlian ASC, kelas.rombel ASC";
 $result_kelas = mysqli_query($conn, $query_kelas);
 
-// Fetch Student Data with correct JOINs
-$query = "SELECT siswa.*, ortu_wali.*, kelas.id_kelas as current_id_kelas
+// Fetch Student Data with correct JOINs and ALIASES
+$query = "SELECT 
+            siswa.nis AS nis, siswa.nama_siswa AS nama_siswa, siswa.jenis_kelamin AS jenis_kelamin, siswa.alamat AS alamat, siswa.id_kelas AS id_kelas,
+            ortu_wali.ayah AS ayah, ortu_wali.ibu AS ibu, ortu_wali.wali AS wali,
+            ortu_wali.pekerjaan_ayah AS pekerjaan_ayah, ortu_wali.pekerjaan_ibu AS pekerjaan_ibu, ortu_wali.pekerjaan_wali AS pekerjaan_wali,
+            ortu_wali.alamat_ayah AS alamat_ayah, ortu_wali.alamat_ibu AS alamat_ibu, ortu_wali.alamat_wali AS alamat_wali,
+            ortu_wali.no_telp_ayah AS no_telp_ayah, ortu_wali.no_telp_ibu AS no_telp_ibu, ortu_wali.no_telp_wali AS no_telp_wali,
+            kelas.id_kelas AS current_id_kelas
           FROM siswa 
           LEFT JOIN ortu_wali ON siswa.id_ortu_wali = ortu_wali.id_ortu_wali 
           LEFT JOIN kelas ON siswa.id_kelas = kelas.id_kelas
@@ -166,7 +172,7 @@ if (!$data) {
         </div>
     </div>
 
-<?php
+    <?php
 }
 include('../../includes/footer.php');
 ?>

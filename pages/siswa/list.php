@@ -1,6 +1,6 @@
 <?php
 // Menentukan lokasi root folder proyek di server
-define('ROOTPATH', $_SERVER['DOCUMENT_ROOT'] . '/poin_siswa/poin_siswa');
+define('ROOTPATH', $_SERVER['DOCUMENT_ROOT'] . '/poin_siswa');
 
 // Menghubungkan ke file konfigurasi (koneksi database)
 include ROOTPATH . "/config/config.php";
@@ -9,12 +9,25 @@ include ROOTPATH . "/config/config.php";
 include ROOTPATH . "/includes/header.php";
 
 // Mengambil semua data siswa dari tabel 'Siswa' JOIN 'Ortu_Wali', 'Kelas', 'Tingkat', 'Program_Keahlian', 'Guru'
-$query = "SELECT siswa.nis, siswa.nama_siswa, siswa.jenis_kelamin, siswa.alamat,
-          ortu_wali.ayah, ortu_wali.ibu, ortu_wali.wali, 
-          ortu_wali.pekerjaan_ayah, ortu_wali.pekerjaan_ibu, ortu_wali.pekerjaan_wali,
-          ortu_wali.alamat_ayah, ortu_wali.alamat_ibu, ortu_wali.alamat_wali,
-          tingkat.tingkat, program_keahlian.program_keahlian, kelas.rombel,
-          guru.nama_pengguna
+// ALIASING columns to ensure keys are always lowercase regardless of DB schema case
+$query = "SELECT 
+            siswa.nis AS nis, 
+            siswa.nama_siswa AS nama_siswa, 
+            siswa.jenis_kelamin AS jenis_kelamin, 
+            siswa.alamat AS alamat,
+            ortu_wali.ayah AS ayah, 
+            ortu_wali.ibu AS ibu, 
+            ortu_wali.wali AS wali, 
+            ortu_wali.pekerjaan_ayah AS pekerjaan_ayah, 
+            ortu_wali.pekerjaan_ibu AS pekerjaan_ibu, 
+            ortu_wali.pekerjaan_wali AS pekerjaan_wali,
+            ortu_wali.alamat_ayah AS alamat_ayah, 
+            ortu_wali.alamat_ibu AS alamat_ibu, 
+            ortu_wali.alamat_wali AS alamat_wali,
+            tingkat.tingkat AS tingkat, 
+            program_keahlian.program_keahlian AS program_keahlian, 
+            kelas.rombel AS rombel,
+            guru.nama_pengguna AS nama_pengguna
           FROM siswa 
           JOIN ortu_wali ON siswa.id_ortu_wali = ortu_wali.id_ortu_wali 
           JOIN kelas ON siswa.id_kelas = kelas.id_kelas 

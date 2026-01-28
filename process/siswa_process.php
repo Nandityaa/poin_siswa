@@ -1,5 +1,5 @@
 <?php
-define('ROOTPATH', $_SERVER['DOCUMENT_ROOT'] . '/poin_siswa/poin_siswa');
+define('ROOTPATH', $_SERVER['DOCUMENT_ROOT'] . '/poin_siswa');
 include ROOTPATH . "/config/config.php";
 
 // Helper function to get next ID because AI is uncertain/dangerous without check
