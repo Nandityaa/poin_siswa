@@ -107,16 +107,17 @@ if (!$result) {
                     <td><?= htmlspecialchars($row['nama_pengguna']) ?></td>
 
                     <!-- Tombol edit untuk ubah data siswa -->
+                    <!-- Tombol edit untuk ubah data siswa -->
                     <td>
-                        <a href="edit.php?id=<?= $row['NIS'] ?>">Edit</a>
+                        <a href="edit.php?id=<?= $row['nis'] ?>">Edit</a>
                     </td>
 
                     <!-- Tombol hapus dengan pengecekan apakah siswa sudah punya transaksi -->
                     <td>
                         <form action="../../process/siswa_process.php" method="post"
-                            onsubmit="return confirm('Ingin Menghapus data <?= $row['Nama_Siswa'] ?>?')">
+                            onsubmit="return confirm('Ingin Menghapus data <?= $row['nama_siswa'] ?>?')">
                             <!-- Kirim id dan action ke file proses -->
-                            <input type="hidden" name="id" value="<?= $row['NIS'] ?>">
+                            <input type="hidden" name="id" value="<?= $row['nis'] ?>">
                             <input type="hidden" name="action" value="delete">
                             <button type="submit">Delete</button>
                         </form>
