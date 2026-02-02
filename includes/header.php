@@ -59,7 +59,7 @@
                 <!-- Setiap item menu -->
                 <li><a href="/poin_siswa/pages/dashboard.php">Dashboard</a></li>
                 <li><a href="/poin_siswa/pages/siswa/list.php">Data Siswa</a></li>
-                <li><a href="/poin_siswa/pages/pelanggaran/list.php">Data Pelanggaran</a></li>
+                <li><a href="/poin_siswa/pages/jenis_pelanggaran/list.php">Data Pelanggaran</a></li>
                 <li><a href="/poin_siswa/pages/pelanggaran/add.php">Entri Pelanggaran</a></li>
                 <li><a href="/poin_siswa/pages/surat/list.php">Cetak Surat</a></li>
                 <li><a href="/poin_siswa/pages/laporan/list.php">Laporan</a></li>
