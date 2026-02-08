@@ -63,7 +63,7 @@
                 <li><a href="/poin_siswa/pages/pelanggaran/add.php">Entri Pelanggaran</a></li>
                 <li><a href="/poin_siswa/pages/surat/list.php">Cetak Surat</a></li>
                 <li><a href="/poin_siswa/pages/laporan/list.php">Laporan</a></li>
-                <li><a href="/poin_siswa/pages/logout.php">Logout</a></li>
+                <li><a href="/poin_siswa/logout.php">Logout</a></li>
             </ul>
         </nav>
     </header>

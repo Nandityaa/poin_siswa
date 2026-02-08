@@ -5,7 +5,7 @@ define('ROOTPATH', $_SERVER['DOCUMENT_ROOT'] . '/poin_siswa');
 // Menyertakan file konfigurasi database
 include ROOTPATH . "/config/config.php";
 
-$username = $_POST["username"];
+$username = mysqli_real_escape_string($conn, $_POST["username"]);
 $password_hash = $_POST["password"];
 
 $query_guru = mysqli_query($conn, "SELECT nama_pengguna, username, password FROM guru WHERE username = '$username'");
@@ -16,6 +16,7 @@ if(mysqli_num_rows($query_guru) >= 1){
     if(password_verify($password_hash, $query_guru['password'])){
         setcookie("nama", $query_guru['nama_pengguna'], time() + 3600, '/');
         setcookie("username", $query_guru['username'], time() + 3600, '/');
+        setcookie("role", "guru", time() + 3600, '/');
         header('Location: ../pages/dashboard.php');
         exit;
     }else{
@@ -26,7 +27,8 @@ if(mysqli_num_rows($query_guru) >= 1){
     if(password_verify($password_hash, $query_siswa['password'])){
         setcookie("nama", $query_siswa['nama_siswa'], time() + 3600, '/');
         setcookie("username", $query_siswa['nis'], time() + 3600, '/');
-        header('Location: ../pages/dashboard.php');
+        setcookie("role", "siswa", time() + 3600, '/');
+        header('Location: ../pages/student_dashboard.php');
         exit;
     }else{
         echo "Password Salah";
