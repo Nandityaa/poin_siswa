@@ -29,11 +29,11 @@ $query = "SELECT
             kelas.rombel AS rombel,
             guru.nama_pengguna AS nama_pengguna
           FROM siswa 
-          JOIN ortu_wali ON siswa.id_ortu_wali = ortu_wali.id_ortu_wali 
-          JOIN kelas ON siswa.id_kelas = kelas.id_kelas 
-          JOIN tingkat ON kelas.id_tingkat = tingkat.id_tingkat 
-          JOIN program_keahlian ON kelas.id_program_keahlian = program_keahlian.id_program_keahlian 
-          JOIN guru ON kelas.kode_guru = guru.kode_guru";
+          LEFT JOIN ortu_wali ON siswa.id_ortu_wali = ortu_wali.id_ortu_wali 
+          LEFT JOIN kelas ON siswa.id_kelas = kelas.id_kelas 
+          LEFT JOIN tingkat ON kelas.id_tingkat = tingkat.id_tingkat 
+          LEFT JOIN program_keahlian ON kelas.id_program_keahlian = program_keahlian.id_program_keahlian 
+          LEFT JOIN guru ON kelas.kode_guru = guru.kode_guru";
 
 $result = mysqli_query($conn, $query);
 

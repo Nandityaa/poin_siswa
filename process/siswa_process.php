@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Ambil Data Siswa
         $nama_siswa = mysqli_real_escape_string($conn, $_POST['nama_siswa']);
         $jenis_kelamin = mysqli_real_escape_string($conn, $_POST['jenis_kelamin']);
-        $alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
+        $alamat = mysqli_real_escape_string($conn, $_POST['alamat_siswa']);
         $id_kelas = !empty($_POST['id_kelas']) ? mysqli_real_escape_string($conn, $_POST['id_kelas']) : 'NULL';
         $password = password_hash('Siswa12345*!', PASSWORD_DEFAULT); // Default password
 
