@@ -1,6 +1,10 @@
 SET FOREIGN_KEY_CHECKS=0;
+DROP DATABASE IF EXISTS `poin_pelanggaran_siswa`;
+CREATE DATABASE `poin_pelanggaran_siswa`;
+USE `poin_pelanggaran_siswa`;
 
 -- 1. Program_Keahlian
+DROP TABLE IF EXISTS `program_keahlian`;
 CREATE TABLE `program_keahlian` (
   `id_program_keahlian` INT(2) PRIMARY KEY,
   `program_keahlian` VARCHAR(6),
@@ -15,6 +19,7 @@ INSERT INTO `program_keahlian` (`id_program_keahlian`, `program_keahlian`, `desk
 (5, 'BD', 'Bisnis Digital');
 
 -- 2. Tingkat
+DROP TABLE IF EXISTS `tingkat`;
 CREATE TABLE `tingkat` (
   `id_tingkat` INT(1) PRIMARY KEY,
   `tingkat` VARCHAR(6)
@@ -26,6 +31,7 @@ INSERT INTO `tingkat` (`id_tingkat`, `tingkat`) VALUES
 (3, 'XII');
 
 -- 3. Tahun_Ajaran
+DROP TABLE IF EXISTS `tahun_ajaran`;
 CREATE TABLE `tahun_ajaran` (
   `id_tahun_ajaran` INT(3) PRIMARY KEY,
   `tahun` VARCHAR(10),
@@ -40,6 +46,7 @@ INSERT INTO `tahun_ajaran` (`id_tahun_ajaran`, `tahun`, `aktif`) VALUES
 (5, '2025/2026', 'Y');
 
 -- 4. Jenis_Pelanggaran
+DROP TABLE IF EXISTS `jenis_pelanggaran`;
 CREATE TABLE `jenis_pelanggaran` (
   `id_jenis_pelanggaran` INT(2) PRIMARY KEY,
   `jenis` VARCHAR(50),
@@ -56,6 +63,7 @@ INSERT INTO `jenis_pelanggaran` (`id_jenis_pelanggaran`, `jenis`, `poin`) VALUES
 (7, 'Upacara Bendera', 4);
 
 -- 5. Guru
+DROP TABLE IF EXISTS `guru`;
 CREATE TABLE `guru` (
   `kode_guru` CHAR(8) PRIMARY KEY,
   `nama_pengguna` VARCHAR(100),
@@ -166,6 +174,7 @@ INSERT INTO `guru` (`kode_guru`, `nama_pengguna`, `role`, `username`, `password`
 ('0021.096', 'Aprianus Anjelius Foutnine,S.Fil', 'Guru', 'anjel', 'Guru12345*!', 'Y', 'Guru Mapel', '081238437877');
 
 -- 6. Ortu_Wali
+DROP TABLE IF EXISTS `ortu_wali`;
 CREATE TABLE `ortu_wali` (
   `id_ortu_wali` INT(5) PRIMARY KEY,
   `ayah` VARCHAR(50),
@@ -189,6 +198,7 @@ INSERT INTO `ortu_wali` (`id_ortu_wali`, `ayah`, `ibu`, `wali`, `pekerjaan_ayah`
 (4, NULL, NULL, 'Safiya Hartman', NULL, NULL, 'Designer', NULL, NULL, '62860589252', 'Psr Jatinegara Bl BKS/30, Dki Jakarta', 'Psr Jatinegara Bl BKS/30, Dki Jakarta', NULL);
 
 -- 7. Profil_Sekolah
+DROP TABLE IF EXISTS `profil_sekolah`;
 CREATE TABLE `profil_sekolah` (
   `id_profil_sekolah` INT(2) PRIMARY KEY,
   `nama_sekolah` VARCHAR(50),
@@ -200,6 +210,7 @@ INSERT INTO `profil_sekolah` (`id_profil_sekolah`, `nama_sekolah`, `alamat_sekol
 (1, 'SMKS TI Bali Global Denpasar', 'Kecamatan Denpasar Selatan, Kota Denpasar, Provinsi Bali', 'Denpasar');
 
 -- 8. Surat_Pindah_Sekolah
+DROP TABLE IF EXISTS `surat_pindah`;
 CREATE TABLE `surat_pindah` (
   `id_surat_pindah` INT(5) PRIMARY KEY,
   `sekolah_tujuan` VARCHAR(100),
@@ -212,6 +223,7 @@ INSERT INTO `surat_pindah` (`id_surat_pindah`, `sekolah_tujuan`, `alasan_pindah`
 (3, 'SMKN 2 Denpasar', 'Mengikuti perpindahan dinas orang tua');
 
 -- 9. Kelas
+DROP TABLE IF EXISTS `kelas`;
 CREATE TABLE `kelas` (
   `id_kelas` INT(3) PRIMARY KEY,
   `id_tingkat` INT,
@@ -235,6 +247,7 @@ INSERT INTO `kelas` (`id_kelas`, `id_tingkat`, `id_program_keahlian`, `rombel`, 
 (35, 1, 4, 1, '0021.034');
 
 -- 10. Siswa
+DROP TABLE IF EXISTS `siswa`;
 CREATE TABLE `siswa` (
   `nis` INT(5) PRIMARY KEY,
   `nama_siswa` VARCHAR(50),
@@ -257,6 +270,7 @@ INSERT INTO `siswa` (`nis`, `nama_siswa`, `jenis_kelamin`, `alamat`, `password`,
 (9126, 'Dayu', 'Perempuan', 'Jl Salemba Raya 2 Ged Kenari Baru Bl C/4, Dki Jakarta', 'Siswa12345*!', 'aktif', 1, 6);
 
 -- 11. Pelanggaran_Siswa
+DROP TABLE IF EXISTS `pelanggaran_siswa`;
 CREATE TABLE `pelanggaran_siswa` (
   `id_pelanggaran_siswa` INT(5) PRIMARY KEY,
   `tanggal` DATETIME,
@@ -273,6 +287,7 @@ INSERT INTO `pelanggaran_siswa` (`id_pelanggaran_siswa`, `tanggal`, `nis`, `id_j
 (3, '2026-01-02 11:26:35', 9126, 3, 'Makan di kelas saat pelajaran Matematika');
 
 -- 12. Perjanjian_Siswa
+DROP TABLE IF EXISTS `perjanjian_siswa`;
 CREATE TABLE `perjanjian_siswa` (
   `id_perjanjian_siswa` INT(5) PRIMARY KEY,
   `tanggal` DATETIME,
@@ -289,6 +304,7 @@ INSERT INTO `perjanjian_siswa` (`id_perjanjian_siswa`, `tanggal`, `id_pelanggara
 (3, '2026-01-05 08:26:32', 3, 'Masih Proses', NULL, 'XI');
 
 -- 13. Perjanjian_Orang_Tua
+DROP TABLE IF EXISTS `perjanjian_orang_tua`;
 CREATE TABLE `perjanjian_orang_tua` (
   `id_perjanjian_ortu` INT(5) PRIMARY KEY,
   `tanggal` DATETIME,
@@ -306,6 +322,7 @@ INSERT INTO `perjanjian_orang_tua` (`id_perjanjian_ortu`, `tanggal`, `id_pelangg
 (2, '2026-01-03 09:26:32', 2, 4, 'Selesai', 'IMG_20260923.jpg', 'XI');
 
 -- 14. Surat_Keluar
+DROP TABLE IF EXISTS `surat_keluar`;
 CREATE TABLE `surat_keluar` (
   `id_surat_keluar` INT(5) PRIMARY KEY,
   `no_surat` VARCHAR(30),
@@ -327,5 +344,6 @@ INSERT INTO `surat_keluar` (`id_surat_keluar`, `no_surat`, `id_tingkat`, `jenis_
 (1, '548/SMKTI/BG/XII/2025', 2, 'Pindah Sekolah', 1, 7012, '2026-01-08', 1, 5),
 (2, '549/SMKTI/BG/XII/2025', 3, 'Panggilan Orang Tua', NULL, 8312, '2026-01-08', 1, 5),
 (3, '550/SMKTI/BG/I/2026', 1, 'Pindah Sekolah', 2, 9123, '2026-01-10', 1, 5);
+
 
 SET FOREIGN_KEY_CHECKS=1;

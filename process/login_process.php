@@ -8,7 +8,7 @@ include ROOTPATH . "/config/config.php";
 $username = $_POST["username"];
 $password_hash = $_POST["password"];
 
-$query_guru = mysqli_query($conn, "SELECT nama_pengguna, username, password FROM g  uru WHERE username = '$username'");
+$query_guru = mysqli_query($conn, "SELECT nama_pengguna, username, password FROM guru WHERE username = '$username'");
 $query_siswa = mysqli_query($conn, "SELECT nis, nama_siswa, password FROM siswa WHERE nis = '$username'");
 
 if(mysqli_num_rows($query_guru) >= 1){
