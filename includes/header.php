@@ -1,3 +1,9 @@
+<?php
+if(!isset($_COOKIE['username'])){
+    echo "<script>alert('Anda harus login terlebih dahulu'); window.location.href = '/poin_siswa/login.php';</script>";
+    exit;
+}
+?>
 <!-- Menandakan bahwa ini adalah dokumen HTML5 -->
 <!DOCTYPE html>
 
@@ -41,6 +47,8 @@
         }
 
         nav ul li a:hover {
+            background: #0056b3;
+            padding: 8px 16px;
             background: #0056b3;
         }
     </style>

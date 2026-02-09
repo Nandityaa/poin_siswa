@@ -8,7 +8,7 @@
 <body>
     <center>
         <h2>Reset Password</h2>
-        <p>Masukkan Username (Guru) atau NIS (Siswa) untuk mereset password ke default.</p>
+        <p>Masukkan Username (Guru) atau NIS (Siswa) untuk mereset password.</p>
         <form action="../process/reset_password_process.php" method="post">
             <label for="username">Username / NIS:</label>
             <input type="text" id="username" name="username" placeholder="Username / NIS" required><br><br>
