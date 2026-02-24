@@ -90,12 +90,23 @@ if(!isset($_COOKIE['username'])){
     .logout:hover{
         background-color: #d61a1aff !important;
     }
+    @media print {
+        @page {
+            margin: 0;
+        }
+        .no-print {
+            display: none !important;
+        }
+        main {
+            all: unset;
+        }
+    }
     </style>
 </head>
 
 <body>
     <!-- Bagian header (bagian atas halaman) -->
-    <header>
+    <header class="no-print">
         <!-- Judul utama halaman -->
         <h1>Aplikasi Poin Pelanggaran Siswa</h1>
 
@@ -115,7 +126,7 @@ if(!isset($_COOKIE['username'])){
                     </ul>
                 </li>
                 <li><a href="/poin_siswa/pages/pelanggaran/add.php">Entri Pelanggaran</a></li>
-                <li><a href="/poin_siswa/pages/surat/list.php">Cetak Surat</a></li>
+                <li><a href="/poin_siswa/pages/cetak/list.php">Cetak Surat</a></li>
                 <li><a href="/poin_siswa/pages/laporan/list.php">Laporan</a></li>
                 <li class="dropdown"> 
                     <a href="#"><?php echo $_COOKIE['nama'];?></a>

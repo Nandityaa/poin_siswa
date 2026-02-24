@@ -102,6 +102,6 @@ include ROOTPATH . "/includes/footer.php";
 <!-- 
     🧠 Penjelasan Singkat:
 	•	File ini digunakan untuk menampilkan form tambah siswa.
-	•	Setelah pengguna mengisi data siswa, data akan dikirim ke /Poin_Pelanggaran_Siswa_XIIRPL4/process/siswa_process.php menggunakan metode POST.
+	•	Setelah pengguna mengisi data siswa, data akan dikirim ke /poin_siswa/process/siswa_process.php menggunakan metode POST.
 	•	File header dan footer dipakai agar tampilan halaman tetap konsisten di seluruh situs. 
 -->
