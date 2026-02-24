@@ -16,7 +16,7 @@ if(!isset($_COOKIE['username'])){
     <meta charset="UTF-8" />
 
     <!-- Judul halaman yang tampil di tab browser -->
-    <title>Poin Pelanggaran Siswa</title>
+    <title>Poin Pelanggaran Siswa SMK TI</title>
 
     <!-- Bagian untuk menulis style (CSS) -->
     <style>
