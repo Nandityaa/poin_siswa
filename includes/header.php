@@ -129,7 +129,7 @@ if(!isset($_COOKIE['username'])){
                 <li class="dropdown"> 
                     <a href="#"><?php echo $_COOKIE['nama'];?></a>
                     <ul class="dropdown-content">
-                        <li><a href="/poin_siswa/process/profil_process.php?action=edit">Edit Profil</a></li>
+                        <li><a href="/poin_siswa/pages/profil/edit.php">Edit Profil</a></li>
                         <li><a class="logout" href="/poin_siswa/logout.php">Logout</a></li>
                     </ul>
                 </li>

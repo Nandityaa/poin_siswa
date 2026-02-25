@@ -221,6 +221,10 @@ include ROOTPATH . "/includes/header.php";
     }
 
     @media print {
+        @page {
+            size: A4;
+            margin: 0;
+        }
         .no-print {
             display: none !important;
         }
@@ -229,10 +233,11 @@ include ROOTPATH . "/includes/header.php";
             padding: 0;
         }
         .page {
-            padding: 10mm;
-            margin: 0;
+            padding: 8mm 12mm;
+            margin: 0 auto;
             width: 100%;
             min-height: auto;
+            box-sizing: border-box;
         }
         nav, header, footer, main {
             all: unset;

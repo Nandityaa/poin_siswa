@@ -57,7 +57,7 @@ if (!$data) {
                 </tr>
                 <tr>
                     <td><label><b>No. Telepon</b></label></td>
-                    <td><input type="text" name="telp" value="<?php echo htmlspecialchars($data['telp']); ?>" /></td>
+                    <td><input type="number" name="telp" value="<?php echo htmlspecialchars($data['telp']); ?>" /></td>
                 </tr>
                 <tr>
                     <td><label><b>Role</b></label></td>

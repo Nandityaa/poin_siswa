@@ -29,7 +29,7 @@ include ROOTPATH . "/includes/header.php";
         <!-- input ini berfungsi untuk menampilkan data nis dan nama siswa yang akan dipilih -->
         <input type="text" name="nis" value="<?php if(isset($_POST['nis'])) { echo $_POST['nis']; } else { echo ""; } ?>" list="nis" placeholder="pilih NIS" autocomplete="off">
 
-        <input class="btn-warning" style="color:#fff; font-weight:bold" type="submit" value="cek">
+        <input class="btn-warning" style="color:#000; font-weight:bold" type="submit" value="cek">
     </form>
 
 

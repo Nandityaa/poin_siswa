@@ -117,7 +117,7 @@ if (!$result) {
                         <form action="../../process/siswa_process.php" method="post"
                             onsubmit="return confirm('Ingin Menghapus data <?= $row['nama_siswa'] ?>?')">
                             <!-- Kirim id dan action ke file proses -->
-                            <input type="hidden" name="id" value="<?= $row['nis'] ?>">
+                            <input type="hidden" name="nis" value="<?= $row['nis'] ?>">
                             <input type="hidden" name="action" value="delete">
                             <button type="submit">Delete</button>
                         </form>
