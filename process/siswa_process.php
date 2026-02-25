@@ -26,22 +26,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $id_kelas = !empty($_POST['id_kelas']) ? mysqli_real_escape_string($conn, $_POST['id_kelas']) : 'NULL';
         $password = password_hash('Siswa12345*!', PASSWORD_DEFAULT); // Default password
 
-        // Ambil Data Ortu
-        $nama_ayah = !empty($_POST['nama_ayah']) ? "'" . mysqli_real_escape_string($conn, $_POST['nama_ayah']) . "'" : "NULL";
+        // Ambil Data Ortu (nama field sesuai dengan form add.php: ayah, ibu, wali)
+        $nama_ayah = !empty($_POST['ayah']) ? "'" . mysqli_real_escape_string($conn, $_POST['ayah']) . "'" : "NULL";
         $pekerjaan_ayah = !empty($_POST['pekerjaan_ayah']) ? "'" . mysqli_real_escape_string($conn, $_POST['pekerjaan_ayah']) . "'" : "NULL";
         $alamat_ayah = !empty($_POST['alamat_ayah']) ? "'" . mysqli_real_escape_string($conn, $_POST['alamat_ayah']) . "'" : "NULL";
+        $no_telp_ayah = !empty($_POST['telp_ayah']) ? "'" . mysqli_real_escape_string($conn, $_POST['telp_ayah']) . "'" : "NULL";
 
-        $nama_ibu = !empty($_POST['nama_ibu']) ? "'" . mysqli_real_escape_string($conn, $_POST['nama_ibu']) . "'" : "NULL";
+        $nama_ibu = !empty($_POST['ibu']) ? "'" . mysqli_real_escape_string($conn, $_POST['ibu']) . "'" : "NULL";
         $pekerjaan_ibu = !empty($_POST['pekerjaan_ibu']) ? "'" . mysqli_real_escape_string($conn, $_POST['pekerjaan_ibu']) . "'" : "NULL";
         $alamat_ibu = !empty($_POST['alamat_ibu']) ? "'" . mysqli_real_escape_string($conn, $_POST['alamat_ibu']) . "'" : "NULL";
+        $no_telp_ibu = !empty($_POST['telp_ibu']) ? "'" . mysqli_real_escape_string($conn, $_POST['telp_ibu']) . "'" : "NULL";
 
-        $nama_wali = !empty($_POST['nama_wali']) ? "'" . mysqli_real_escape_string($conn, $_POST['nama_wali']) . "'" : "NULL";
+        $nama_wali = !empty($_POST['wali']) ? "'" . mysqli_real_escape_string($conn, $_POST['wali']) . "'" : "NULL";
         $pekerjaan_wali = !empty($_POST['pekerjaan_wali']) ? "'" . mysqli_real_escape_string($conn, $_POST['pekerjaan_wali']) . "'" : "NULL";
         $alamat_wali = !empty($_POST['alamat_wali']) ? "'" . mysqli_real_escape_string($conn, $_POST['alamat_wali']) . "'" : "NULL";
+        $no_telp_wali = !empty($_POST['telp_wali']) ? "'" . mysqli_real_escape_string($conn, $_POST['telp_wali']) . "'" : "NULL";
 
         // Query Insert Ortu_Wali
-        $query_ortu = "INSERT INTO ortu_wali (ayah, ibu, wali, pekerjaan_ayah, pekerjaan_ibu, pekerjaan_wali, alamat_ayah, alamat_ibu, alamat_wali) 
-                       VALUES ($nama_ayah, $nama_ibu, $nama_wali, $pekerjaan_ayah, $pekerjaan_ibu, $pekerjaan_wali, $alamat_ayah, $alamat_ibu, $alamat_wali)";
+        $query_ortu = "INSERT INTO ortu_wali (ayah, ibu, wali, pekerjaan_ayah, pekerjaan_ibu, pekerjaan_wali, alamat_ayah, alamat_ibu, alamat_wali, no_telp_ayah, no_telp_ibu, no_telp_wali) 
+                       VALUES ($nama_ayah, $nama_ibu, $nama_wali, $pekerjaan_ayah, $pekerjaan_ibu, $pekerjaan_wali, $alamat_ayah, $alamat_ibu, $alamat_wali, $no_telp_ayah, $no_telp_ibu, $no_telp_wali)";
 
         if (mysqli_query($conn, $query_ortu)) {
             // Ambil ID Ortu yang baru saja dibuat
@@ -56,14 +59,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             die("Error Insert Ortu: " . mysqli_error($conn));
         }
 
-        // Jika aksi adalah "edit", maka ubah data siswa berdasarkan NIS
+        // Jika aksi adalah "edit", maka ubah data siswa dan data orang tua berdasarkan NIS
     } elseif ($action == 'edit') {
         $nama_siswa = mysqli_real_escape_string($conn, $_POST['nama_siswa']);
         $jenis_kelamin = mysqli_real_escape_string($conn, $_POST['jenis_kelamin']);
         $alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
         $id_kelas = !empty($_POST['id_kelas']) ? mysqli_real_escape_string($conn, $_POST['id_kelas']) : 'NULL';
-        $id_ortu_wali = !empty($_POST['id_ortu_wali']) ? mysqli_real_escape_string($conn, $_POST['id_ortu_wali']) : 'NULL';
 
+        // Ambil Data Ortu dari form edit (field names: ayah, ibu, wali, dll)
+        $ayah = !empty($_POST['ayah']) ? "'" . mysqli_real_escape_string($conn, $_POST['ayah']) . "'" : "NULL";
+        $ibu = !empty($_POST['ibu']) ? "'" . mysqli_real_escape_string($conn, $_POST['ibu']) . "'" : "NULL";
+        $wali = !empty($_POST['wali']) ? "'" . mysqli_real_escape_string($conn, $_POST['wali']) . "'" : "NULL";
+        $pekerjaan_ayah = !empty($_POST['pekerjaan_ayah']) ? "'" . mysqli_real_escape_string($conn, $_POST['pekerjaan_ayah']) . "'" : "NULL";
+        $pekerjaan_ibu = !empty($_POST['pekerjaan_ibu']) ? "'" . mysqli_real_escape_string($conn, $_POST['pekerjaan_ibu']) . "'" : "NULL";
+        $pekerjaan_wali = !empty($_POST['pekerjaan_wali']) ? "'" . mysqli_real_escape_string($conn, $_POST['pekerjaan_wali']) . "'" : "NULL";
+        $alamat_ayah = !empty($_POST['alamat_ayah']) ? "'" . mysqli_real_escape_string($conn, $_POST['alamat_ayah']) . "'" : "NULL";
+        $alamat_ibu = !empty($_POST['alamat_ibu']) ? "'" . mysqli_real_escape_string($conn, $_POST['alamat_ibu']) . "'" : "NULL";
+        $alamat_wali = !empty($_POST['alamat_wali']) ? "'" . mysqli_real_escape_string($conn, $_POST['alamat_wali']) . "'" : "NULL";
+        $no_telp_ayah = !empty($_POST['no_telp_ayah']) ? "'" . mysqli_real_escape_string($conn, $_POST['no_telp_ayah']) . "'" : "NULL";
+        $no_telp_ibu = !empty($_POST['no_telp_ibu']) ? "'" . mysqli_real_escape_string($conn, $_POST['no_telp_ibu']) . "'" : "NULL";
+        $no_telp_wali = !empty($_POST['no_telp_wali']) ? "'" . mysqli_real_escape_string($conn, $_POST['no_telp_wali']) . "'" : "NULL";
+
+        // Cek apakah siswa sudah punya id_ortu_wali
+        $query_cek = mysqli_query($conn, "SELECT id_ortu_wali FROM siswa WHERE nis='$nis'");
+        $row_cek = mysqli_fetch_assoc($query_cek);
+        $id_ortu_wali = $row_cek['id_ortu_wali'];
+
+        if (!empty($id_ortu_wali)) {
+            // Update data ortu_wali yang sudah ada
+            $query_ortu = "UPDATE ortu_wali SET 
+                            ayah=$ayah, ibu=$ibu, wali=$wali,
+                            pekerjaan_ayah=$pekerjaan_ayah, pekerjaan_ibu=$pekerjaan_ibu, pekerjaan_wali=$pekerjaan_wali,
+                            alamat_ayah=$alamat_ayah, alamat_ibu=$alamat_ibu, alamat_wali=$alamat_wali,
+                            no_telp_ayah=$no_telp_ayah, no_telp_ibu=$no_telp_ibu, no_telp_wali=$no_telp_wali
+                          WHERE id_ortu_wali=$id_ortu_wali";
+            mysqli_query($conn, $query_ortu) or die("Error Update Ortu: " . mysqli_error($conn));
+        } else {
+            // Jika belum punya data ortu, buat baru
+            $query_ortu = "INSERT INTO ortu_wali (ayah, ibu, wali, pekerjaan_ayah, pekerjaan_ibu, pekerjaan_wali, alamat_ayah, alamat_ibu, alamat_wali, no_telp_ayah, no_telp_ibu, no_telp_wali) 
+                           VALUES ($ayah, $ibu, $wali, $pekerjaan_ayah, $pekerjaan_ibu, $pekerjaan_wali, $alamat_ayah, $alamat_ibu, $alamat_wali, $no_telp_ayah, $no_telp_ibu, $no_telp_wali)";
+            if (mysqli_query($conn, $query_ortu)) {
+                $id_ortu_wali = mysqli_insert_id($conn);
+            } else {
+                die("Error Insert Ortu: " . mysqli_error($conn));
+            }
+        }
+
+        // Update data siswa
         $query = "UPDATE siswa SET 
                     nama_siswa='$nama_siswa', 
                     jenis_kelamin='$jenis_kelamin', 

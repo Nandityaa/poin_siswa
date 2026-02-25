@@ -23,7 +23,7 @@ include ROOTPATH . "/includes/header.php";
                 <input type="hidden" name="action" value="add" />
 
                 <tr>
-                    <td><input type="text" name="nis" autocomplete="off" required placeholder="NIS"/><br><br><br>
+                    <td><input type="number" name="nis" autocomplete="off" required placeholder="NIS"/><br><br><br>
                     <input type="text" name="nama_siswa" autocomplete="off" required placeholder="Nama Siswa"/></td>
                     <!-- untuk memberikan jarak antara kolom -->
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>

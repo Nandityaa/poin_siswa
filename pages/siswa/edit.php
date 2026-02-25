@@ -45,7 +45,7 @@ if (!$data) {
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label fw-bold">NIS <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="nis"
+                            <input type="number" class="form-control" name="nis"
                                 value="<?php echo htmlspecialchars($data['nis']); ?>" readonly>
                         </div>
                         <div class="col-md-6">
@@ -148,17 +148,17 @@ if (!$data) {
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label class="form-label fw-bold">No Telp Ayah</label>
-                            <input type="text" class="form-control" name="no_telp_ayah"
+                            <input type="number" class="form-control" name="no_telp_ayah"
                                 value="<?php echo htmlspecialchars($data['no_telp_ayah'] ?? ''); ?>">
                         </div>
                         <div class="col-md-4">
                             <label class="form-label fw-bold">No Telp Ibu</label>
-                            <input type="text" class="form-control" name="no_telp_ibu"
+                            <input type="number" class="form-control" name="no_telp_ibu"
                                 value="<?php echo htmlspecialchars($data['no_telp_ibu'] ?? ''); ?>">
                         </div>
                         <div class="col-md-4">
                             <label class="form-label fw-bold">No Telp Wali</label>
-                            <input type="text" class="form-control" name="no_telp_wali"
+                            <input type="number" class="form-control" name="no_telp_wali"
                                 value="<?php echo htmlspecialchars($data['no_telp_wali'] ?? ''); ?>">
                         </div>
                     </div>
