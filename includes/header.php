@@ -91,9 +91,6 @@ if(!isset($_COOKIE['username'])){
         background-color: #d61a1aff !important;
     }
     @media print {
-        @page {
-            margin: 0;
-        }
         .no-print {
             display: none !important;
         }
@@ -122,6 +119,7 @@ if(!isset($_COOKIE['username'])){
                     <ul class="dropdown-content">
                         <li><a href="/poin_siswa/pages/guru/list.php">Data Guru</a></li>
                         <li><a href="/poin_siswa/pages/siswa/list.php">Data Siswa</a></li>
+                        <li><a href="/poin_siswa/pages/kelas/list.php">Data Kelas</a></li>
                         <li><a href="/poin_siswa/pages/jenis_pelanggaran/list.php">Data Jenis Pelanggaran</a></li>
                     </ul>
                 </li>

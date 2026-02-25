@@ -2,13 +2,13 @@
     </main>
 
     <!-- Bagian footer yang muncul di bawah halaman -->
-    <footer style="margin-top:50px; padding:10px; background-color:#f0f0f0; bottom:0;">
+    <footer class="no-print" style="margin-top:50px; padding:10px; background-color:#f0f0f0; bottom:0;">
 
         <!-- Menengahkan isi footer -->
         <center>
 
             <!-- Teks hak cipta -->
-            <p>Copyright &copy; 2025 Aplikasi Pelanggaran Siswa</p>
+            <p class="no-print">Copyright &copy; 2025 Aplikasi Pelanggaran Siswa</p>
 
         </center>
     </footer>

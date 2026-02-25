@@ -6,14 +6,11 @@ define('ROOTPATH', $_SERVER['DOCUMENT_ROOT'] . '/poin_siswa');
 include ROOTPATH . "/config/config.php";
 
 $nis = $_POST['nis'];
+$no_surat = $_POST['no_surat'];
+$tanggal = $_POST['tanggal'];
+$keperluan = $_POST['keperluan'];
 
-// Data Orang Tua / Wali (dikirim dari file add_perjanjian_siswa.php menggunakan method POST)
-$nama_ortu = $_POST['nama_ortu'];
-$pekerjaan = $_POST['pekerjaan'];
-$alamat = $_POST['alamat'];
-$no_telp = $_POST['no_telp'];
-
-// Fetch Guru Siswa
+// Fetch data siswa
 $query_siswa = mysqli_query($conn, "SELECT * FROM siswa
     JOIN ortu_wali USING(id_ortu_wali)
     JOIN kelas USING(id_kelas)
@@ -22,7 +19,7 @@ $query_siswa = mysqli_query($conn, "SELECT * FROM siswa
     JOIN guru USING(kode_guru) WHERE nis = '$nis'");
 $row_siswa = mysqli_fetch_assoc($query_siswa);
 
-// Fetch Guru BK XII
+// Fetch Guru BK berdasarkan tingkat
 $tingkat = $row_siswa['tingkat'];
 if($tingkat == 'XII'){
     $query_bk = mysqli_query($conn, "SELECT nama_pengguna FROM guru WHERE jabatan = 'Guru BK XII' AND aktif = 'Y'");
@@ -39,7 +36,16 @@ $query_waka = mysqli_query($conn, "SELECT nama_pengguna FROM guru WHERE jabatan 
 $row_waka = mysqli_fetch_assoc($query_waka);
 $waka_kesiswaan = $row_waka['nama_pengguna'];
 
-// Menyertakan tampilan header (bagian atas halaman)
+// Fetch Kepala Sekolah
+$query_kepsek = mysqli_query($conn, "SELECT nama_pengguna FROM guru WHERE jabatan = 'Kepala Sekolah' AND aktif = 'Y'");
+$row_kepsek = mysqli_fetch_assoc($query_kepsek);
+$kepala_sekolah = $row_kepsek ? $row_kepsek['nama_pengguna'] : '';
+
+// Format tanggal
+$tanggal_formatted = date("d-m-Y", strtotime($tanggal));
+$waktu_formatted = date("H:i", strtotime($tanggal));
+
+// Menyertakan tampilan header
 include ROOTPATH . "/includes/header.php";
 ?>
 
@@ -125,47 +131,49 @@ include ROOTPATH . "/includes/header.php";
     .page {
         width: 210mm;
         min-height: 297mm;
-        padding: 10mm 15mm;
+        padding: 15mm;
         margin: 0 auto;
         background: white;
         font-family: 'Times New Roman', Times, serif;
-        font-size: 10.5pt;
-        line-height: 1.3;
+        font-size: 11pt;
+        line-height: 1.5;
     }
 
     .header {
         text-align: center;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
 
     .title {
         text-align: center;
         font-weight: bold;
-        font-size: 12pt;
+        font-size: 13pt;
         text-decoration: underline;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
+    }
+
+    .subtitle {
+        text-align: center;
+        font-size: 11pt;
+        margin-bottom: 15px;
     }
 
     .content {
         text-align: justify;
     }
 
-    .content p {
-        margin: 5px 0;
-    }
-
     .indent {
         margin-left: 40px;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
 
     .form-row {
         display: flex;
-        margin-bottom: 2px;
+        margin-bottom: 3px;
     }
 
     .label {
-        width: 130px;
+        width: 150px;
     }
 
     .separator {
@@ -175,33 +183,24 @@ include ROOTPATH . "/includes/header.php";
 
     .field {
         flex: 1;
-        border-bottom: 1px dotted #000;
-        min-height: 16px;
-    }
-
-    .field-masalah {
-        flex: 1;
-        border-bottom: 1px dotted #000;
-        min-height: 25px;
     }
 
     .statement {
         text-indent: 40px;
-        margin-top: 5px;
-        margin-bottom: 0;
+        margin-top: 10px;
     }
 
     .signature-section {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        margin-top: 15px;
+        margin-top: 30px;
     }
 
     .sig-block {
         width: 45%;
         text-align: center;
-        margin-bottom: 5px;
+        margin-bottom: 20px;
     }
 
     .sig-right {
@@ -209,28 +208,19 @@ include ROOTPATH . "/includes/header.php";
     }
 
     .sig-name {
-        margin-top: 40px;
+        margin-top: 60px;
         border-top: 1px solid #000;
         display: inline-block;
-        padding-top: 3px;
+        padding-top: 5px;
     }
 
     .sig-name-plain {
-        margin-top: 40px;
+        margin-top: 60px;
         display: inline-block;
-        padding-top: 3px;
-    }
-
-    .footer-sig {
-        text-align: center;
-        margin-top: 5px;
+        padding-top: 5px;
     }
 
     @media print {
-        @page {
-            size: A4;
-            margin: 0;
-        }
         .no-print {
             display: none !important;
         }
@@ -239,11 +229,10 @@ include ROOTPATH . "/includes/header.php";
             padding: 0;
         }
         .page {
-            padding: 8mm 12mm;
-            margin: 0 auto;
+            padding: 10mm;
+            margin: 0;
             width: 100%;
             min-height: auto;
-            box-sizing: border-box;
         }
         nav, header, footer, main {
             all: unset;
@@ -254,8 +243,7 @@ include ROOTPATH . "/includes/header.php";
 <!-- tombol kembali -->
 <center class="no-print">
     <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
-        <!-- tombol ini berfungsi untuk kembali ke halaman add_perjanjian_siswa.php dan mengirimkan nis yang sudah di cek menggunakan method post -->
-        <form action="add_perjanjian_siswa.php" method="post" style="margin: 0;">
+        <form action="add_panggilan_ortu.php" method="post" style="margin: 0;">
             <input type="text" name="nis" value="<?= $nis ?>" hidden>
             <button type="submit">
                 <svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024">
@@ -265,7 +253,6 @@ include ROOTPATH . "/includes/header.php";
             </button>
         </form>
 
-        <!-- tombol ini berfungsi untuk print halaman ini -->
         <button class="print-btn" onclick="window.print()">
             <span class="printer-wrapper">
                 <span class="printer-container">
@@ -291,16 +278,18 @@ include ROOTPATH . "/includes/header.php";
         <img src="/poin_siswa/gambar/kop.jpg" alt="kepala surat" width="100%">
     </div>
 
-    <div class="title">SURAT PERNYATAAN SISWA</div>
+    <div class="title">SURAT PANGGILAN ORANG TUA / WALI</div>
+    <div class="subtitle">No. <?= htmlspecialchars($no_surat) ?>/BK/SMK-TI-BG/<?= date("Y") ?></div>
 
     <div class="content">
-        <p>Yang bertandatangan di bawah ini :</p>
+        <p>Kepada Yth.<br>
+        Bapak/Ibu Orang Tua/Wali dari siswa :<br></p>
 
         <div class="indent">
             <div class="form-row">
                 <div class="label">Nama</div>
                 <div class="separator">:</div>
-                <div class="field"><?php echo $row_siswa['nama_siswa']; ?></div>
+                <div class="field"><strong><?php echo $row_siswa['nama_siswa']; ?></strong></div>
             </div>
             <div class="form-row">
                 <div class="label">NIS</div>
@@ -317,74 +306,47 @@ include ROOTPATH . "/includes/header.php";
                 <div class="separator">:</div>
                 <div class="field"><?php echo $row_siswa['deskripsi']; ?></div>
             </div>
-            <div class="form-row">
-                <div class="label">Masalah</div>
-                <div class="separator">:</div>
-                <div class="field-masalah"></div>
-            </div>
         </div>
+
+        <p>Dengan hormat, bersama surat ini kami mengharapkan kehadiran Bapak/Ibu untuk datang ke sekolah pada :</p>
 
         <div class="indent">
             <div class="form-row">
-                <div class="label">Nama Orang Tua</div>
+                <div class="label">Hari/Tanggal</div>
                 <div class="separator">:</div>
-                <div class="field"><?=$nama_ortu?></div>
+                <div class="field"><?= $tanggal_formatted ?></div>
             </div>
             <div class="form-row">
-                <div class="label">Pekerjaan</div>
+                <div class="label">Waktu</div>
                 <div class="separator">:</div>
-                <div class="field"><?=$pekerjaan?></div>
+                <div class="field"><?= $waktu_formatted ?> WITA</div>
             </div>
             <div class="form-row">
-                <div class="label">Alamat Rumah</div>
+                <div class="label">Tempat</div>
                 <div class="separator">:</div>
-                <div class="field"><?=$alamat?></div>
+                <div class="field">SMK TI Bali Global Denpasar</div>
             </div>
             <div class="form-row">
-                <div class="label">No. Hp./Telp.</div>
+                <div class="label">Keperluan</div>
                 <div class="separator">:</div>
-                <div class="field"><?=$no_telp?></div>
+                <div class="field"><?= htmlspecialchars($keperluan) ?></div>
             </div>
         </div>
 
-        <p class="statement">
-            Menyatakan dan berjanji akan bersungguh-sungguh berubah dan bersedia mentaati aturan dan tata tertib sekolah.
-            Apabila selama masa pembinaan tidak mengalami perubahan, maka siswa yang bersangkutan dikembalikan kepada orang tua/wali. <br>
-            Demikian surat pernyataan ini saya buat dengan sesungguhnya tanpa ada tekanan dari siapapun.
-        </p>
+        <p>Demikian surat panggilan ini kami sampaikan, atas perhatian dan kehadiran Bapak/Ibu kami ucapkan terima kasih.</p>
+    </div>
 
-        <div class="signature-section">
-            <div class="sig-block">
-                <div>Mengetahui,</div>
-                <div>Orang Tua/Wali siswa</div>
-                <div class="sig-name-plain"><?= $nama_ortu ?></div>
-            </div>
-
-            <div class="sig-block sig-right">
-                <div>Denpasar, <?php echo date("d-m-Y"); ?></div>
-                <div>Siswa yang bersangkutan</div>
-                <div class="sig-name-plain"><?php echo $row_siswa['nama_siswa']; ?></div>
-            </div>
-
-            <div class="sig-block">
-                <div>Guru Bimbingan Konseling</div>
-                <div class="sig-name" style="border: none; text-decoration: underline;">
-                    <?= htmlspecialchars($guru_bk) ?>
-                </div>
-            </div>
-
-            <div class="sig-block sig-right">
-                <div>Guru Wali Kelas</div>
-                <div class="sig-name"><?php echo $row_siswa['nama_pengguna']; ?></div>
-            </div>
+    <div class="signature-section">
+        <div class="sig-block">
+            <div>Mengetahui,</div>
+            <div>Waka Kesiswaan</div>
+            <div class="sig-name"><?= htmlspecialchars($waka_kesiswaan) ?></div>
         </div>
 
-        <div class="footer-sig">
-            <div>Mengetahui</div>
-            <div>Wakasek Kesiswaan</div>
-            <div class="sig-name">
-                <?= htmlspecialchars($waka_kesiswaan) ?>
-            </div>
+        <div class="sig-block sig-right">
+            <div>Denpasar, <?php echo date("d-m-Y"); ?></div>
+            <div>Guru Bimbingan Konseling</div>
+            <div class="sig-name"><?= htmlspecialchars($guru_bk) ?></div>
         </div>
     </div>
 </div>
