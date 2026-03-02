@@ -14,8 +14,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Jika aksi adalah "delete", maka hapus data siswa berdasarkan NIS
     if ($action == 'delete') {
-        $query = "DELETE FROM siswa WHERE nis='$nis'";
-        mysqli_query($conn, $query) or die(mysqli_error($conn));
+        // Ambil id_ortu_wali sebelum hapus siswa
+        $query_ortu = mysqli_query($conn, "SELECT id_ortu_wali FROM siswa WHERE nis='$nis'");
+        $row_ortu = mysqli_fetch_assoc($query_ortu);
+        $id_ortu = $row_ortu ? $row_ortu['id_ortu_wali'] : null;
+
+        // Ambil semua id_pelanggaran_siswa terkait NIS ini
+        $pel_result = mysqli_query($conn, "SELECT id_pelanggaran_siswa FROM pelanggaran_siswa WHERE nis='$nis'");
+        while ($pel = mysqli_fetch_assoc($pel_result)) {
+            $id_pel = $pel['id_pelanggaran_siswa'];
+            // Hapus perjanjian_siswa yang terkait
+            mysqli_query($conn, "DELETE FROM perjanjian_siswa WHERE id_pelanggaran_siswa='$id_pel'");
+            // Hapus perjanjian_orang_tua yang terkait
+            mysqli_query($conn, "DELETE FROM perjanjian_orang_tua WHERE id_pelanggaran_siswa='$id_pel'");
+        }
+
+        // Hapus data pelanggaran siswa
+        mysqli_query($conn, "DELETE FROM pelanggaran_siswa WHERE nis='$nis'");
+
+        // Hapus data siswa
+        mysqli_query($conn, "DELETE FROM siswa WHERE nis='$nis'") or die(mysqli_error($conn));
+
+        // Hapus data ortu_wali jika ada
+        if ($id_ortu) {
+            mysqli_query($conn, "DELETE FROM ortu_wali WHERE id_ortu_wali='$id_ortu'");
+        }
 
         // Jika aksi adalah "add", maka tambahkan data siswa beserta orang tua
     } elseif ($action == 'add') {
