@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $query = mysqli_query($conn, "INSERT INTO guru (kode_guru, nama_pengguna, role, username, password, aktif, jabatan, telp) VALUES ('$kode_guru', '$nama_guru', '$role', '$username', '$password_input', 'Y', '$jabatan', '$telp')");
         if($query){
             header("Location: index.php");
+            exit;
         }else{
             echo "Gagal Menambah Data Guru";
         }

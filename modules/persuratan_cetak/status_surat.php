@@ -45,101 +45,88 @@ function statusBadge($status) {
 ?>
 
 <style>
-.page-wrapper { max-width: 1150px; margin: 36px auto; padding: 0 20px; }
-.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
-.page-header h2 { margin: 0; font-size: 26px; color: #1a2a3a; font-weight: 700; }
-.section-card { background: white; border-radius: 12px; box-shadow: 0 2px 16px rgba(0,0,0,0.07); overflow: hidden; }
-.data-table { width: 100%; border-collapse: collapse; }
-.data-table th {
-    background: #1a2a3a; color: #fff;
-    padding: 13px 16px; font-size: 12px; font-weight: 600;
-    text-align: center; text-transform: uppercase; letter-spacing: 0.5px;
-    border-right: 1px solid rgba(255,255,255,0.1);
-}
-.data-table th:first-child, .data-table th:nth-child(2), .data-table th:nth-child(3) { text-align: left; }
-.data-table td {
-    padding: 12px 16px; border-bottom: 1px solid #f0f2f5;
-    font-size: 13px; color: #2c3e50; vertical-align: middle;
-    text-align: center;
-}
-.data-table td:first-child, .data-table td:nth-child(2), .data-table td:nth-child(3) { text-align: left; }
-.data-table tr:last-child td { border-bottom: none; }
-.data-table tr:hover td { background: #f8fafc; }
+.page-wrapper { font-family: 'Inter', sans-serif; max-width: 1200px; margin: 40px auto; padding: 0 20px; animation: fadeIn 0.4s ease-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-.student-name { font-weight: 600; color: #1a2a3a; }
-.student-nis { font-size: 11px; color: #94a3b8; }
-.badge-kelas { background: #e3f0ff; color: #0056b3; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.page-title { display: flex; align-items: center; gap: 12px; }
+.page-title i { font-size: 28px; color: var(--primary); }
+.page-title h2 { margin: 0; font-size: 24px; font-weight: 700; color: #1e293b; letter-spacing: -0.5px; }
 
-/* Status Badges */
-.badge-selesai {
-    background: #dcfce7; color: #166534;
-    padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700;
-    white-space: nowrap; display: inline-block;
-}
-.badge-dicetak {
-    background: #dbeafe; color: #1e40af;
-    padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700;
-    white-space: nowrap; display: inline-block;
-}
-.badge-belum {
-    background: #f1f5f9; color: #94a3b8;
-    padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600;
-    white-space: nowrap; display: inline-block;
-}
-
-/* Legend */
-.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
+.legend { background: white; padding: 16px 20px; border-radius: 12px; display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.02); border: 1px solid rgba(0,0,0,0.05); }
 .legend-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #475569; }
 
-.empty-row td { text-align: center; padding: 40px; color: #adb5bd; font-style: italic; }
+.data-card { background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.05); overflow: hidden; }
+.table-responsive { overflow-x: auto; }
+.data-table { width: 100%; border-collapse: collapse; white-space: nowrap; }
+.data-table th { background: #f8fafc; padding: 16px 20px; font-size: 13px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+.data-table td { padding: 16px 20px; font-size: 14px; color: #334155; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tbody tr:hover { background: #f8fafc; }
+
+.student-name { font-weight: 600; color: #1e293b; }
+.student-nis { font-size: 12px; color: #64748b; margin-top: 2px; }
+.badge-kelas { background: #eff6ff; color: #2563eb; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+
+/* Status Badges */
+.badge-selesai { background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; display: inline-block; }
+.badge-dicetak { background: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; display: inline-block; }
+.badge-belum { background: #f1f5f9; color: #64748b; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; display: inline-block; }
+
+.empty-row td { text-align: center; padding: 40px !important; color: #94a3b8; font-style: italic; }
 </style>
 
 <div class="page-wrapper">
     <div class="page-header">
-        <h2>Status Surat</h2>
+        <div class="page-title">
+            <i class="fa-solid fa-list-check"></i>
+            <h2>Status Surat Siswa</h2>
+        </div>
     </div>
 
     <div class="legend">
-        <strong style="font-size:13px; color:#1a2a3a;">Keterangan:</strong>
+        <strong style="color: #1e293b; font-size: 14px;">Keterangan Status:</strong>
         <span class="legend-item"><span class="badge-belum">Belum Dibuat</span> Belum pernah dicetak</span>
-        <span class="legend-item"><span class="badge-dicetak">Sudah Dicetak</span> Surat sudah dicetak, proses berjalan</span>
+        <span class="legend-item"><span class="badge-dicetak">Sudah Dicetak</span> Menunggu tanda tangan</span>
         <span class="legend-item"><span class="badge-selesai">Sudah Ditandatangani</span> Proses selesai</span>
     </div>
 
-    <div class="section-card">
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Siswa</th>
-                    <th>Kelas</th>
-                    <th>Perjanjian Siswa</th>
-                    <th>Perjanjian Orang Tua</th>
-                    <th>Panggilan Orang Tua</th>
-                    <th>Surat Pindah</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php $no = 1; $found = false; while ($row = mysqli_fetch_assoc($query)): $found = true;
-                    $kelas = $row['tingkat'] . ' ' . $row['program_keahlian'] . ' ' . $row['rombel'];
-                ?>
-                <tr>
-                    <td><?= $no++ ?></td>
-                    <td>
-                        <div class="student-name"><?= htmlspecialchars($row['nama_siswa']) ?></div>
-                        <div class="student-nis">NIS: <?= htmlspecialchars($row['nis']) ?></div>
-                    </td>
-                    <td><span class="badge-kelas"><?= htmlspecialchars($kelas) ?></span></td>
-                    <td><?= statusBadge($row['status_perj_siswa']) ?></td>
-                    <td><?= statusBadge($row['status_perj_ortu']) ?></td>
-                    <td><?= statusBadge($row['status_panggilan']) ?></td>
-                    <td><?= statusBadge($row['status_pindah']) ?></td>
-                </tr>
-                <?php endwhile; if (!$found): ?>
-                <tr class="empty-row"><td colspan="7">Belum ada siswa dengan data pelanggaran tercatat.</td></tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+    <div class="data-card">
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th width="5%">No</th>
+                        <th>Siswa</th>
+                        <th>Kelas</th>
+                        <th>Perjanjian Siswa</th>
+                        <th>Perjanjian Ortu</th>
+                        <th>Panggilan Ortu</th>
+                        <th>Surat Pindah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $no = 1; $found = false; while ($row = mysqli_fetch_assoc($query)): $found = true;
+                        $kelas = $row['tingkat'] . ' ' . $row['program_keahlian'] . ' ' . $row['rombel'];
+                    ?>
+                    <tr>
+                        <td><?= $no++ ?></td>
+                        <td>
+                            <div class="student-name"><?= htmlspecialchars($row['nama_siswa']) ?></div>
+                            <div class="student-nis">NIS: <?= htmlspecialchars($row['nis']) ?></div>
+                        </td>
+                        <td><span class="badge-kelas"><?= htmlspecialchars($kelas) ?></span></td>
+                        <td><?= statusBadge($row['status_perj_siswa']) ?></td>
+                        <td><?= statusBadge($row['status_perj_ortu']) ?></td>
+                        <td><?= statusBadge($row['status_panggilan']) ?></td>
+                        <td><?= statusBadge($row['status_pindah']) ?></td>
+                    </tr>
+                    <?php endwhile; if (!$found): ?>
+                    <tr class="empty-row"><td colspan="7">Belum ada siswa dengan data pelanggaran tercatat.</td></tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

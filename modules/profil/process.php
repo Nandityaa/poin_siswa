@@ -9,10 +9,11 @@ include ROOTPATH . "/config/config.php";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $action = $_POST['action'];
-    $kode_guru = mysqli_real_escape_string($conn, $_POST['kode_guru']);
-
-    // Proses update profil
-    if ($action == 'update') {
+    $is_siswa = isset($_POST['is_siswa']) && $_POST['is_siswa'] == '1';
+    
+    // Proses update profil (Hanya Guru)
+    if ($action == 'update' && !$is_siswa) {
+        $kode_guru = mysqli_real_escape_string($conn, $_POST['kode_guru']);
         $nama_pengguna = mysqli_real_escape_string($conn, $_POST['nama_pengguna']);
         $username = mysqli_real_escape_string($conn, $_POST['username']);
         $telp = mysqli_real_escape_string($conn, $_POST['telp']);
@@ -31,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Proses ganti password
     if ($action == 'change_password') {
+        $identifier = mysqli_real_escape_string($conn, $_POST['identifier']);
         $password_lama = $_POST['password_lama'];
         $password_baru = $_POST['password_baru'];
         $password_konfirmasi = $_POST['password_konfirmasi'];
@@ -41,14 +43,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit;
         }
 
-        // Ambil password lama dari database
-        $query_check = mysqli_query($conn, "SELECT password FROM guru WHERE kode_guru='$kode_guru'");
+        if ($is_siswa) {
+            $query_check = mysqli_query($conn, "SELECT password FROM siswa WHERE nis='$identifier'");
+        } else {
+            $query_check = mysqli_query($conn, "SELECT password FROM guru WHERE kode_guru='$identifier'");
+        }
+        
         $data = mysqli_fetch_assoc($query_check);
 
         // Verifikasi password lama
-        if (password_verify($password_lama, $data['password'])) {
+        if ($data && password_verify($password_lama, $data['password'])) {
             $password_hash = password_hash($password_baru, PASSWORD_DEFAULT);
-            $query = mysqli_query($conn, "UPDATE guru SET password='$password_hash' WHERE kode_guru='$kode_guru'");
+            
+            if ($is_siswa) {
+                $query = mysqli_query($conn, "UPDATE siswa SET password='$password_hash' WHERE nis='$identifier'");
+            } else {
+                $query = mysqli_query($conn, "UPDATE guru SET password='$password_hash' WHERE kode_guru='$identifier'");
+            }
+            
             if ($query) {
                 header("Location: edit.php?success=password");
                 exit;

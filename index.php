@@ -5,6 +5,7 @@ if(isset($_COOKIE['username'])) {
     } else {
         header("Location: modules/dashboard/index.php");
     }
+    // Nama web: Sistem Pelanggaran Siswa
 } else {
     header("Location: modules/auth/login.php");
 }

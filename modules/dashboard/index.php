@@ -27,103 +27,99 @@ include ROOTPATH . "/layouts/header.php";
 ?>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
+/* DASHBOARD STYLES */
 .db-page {
     font-family: 'Inter', sans-serif;
-    padding: 32px;
-    max-width: 1200px;
-    margin: 0 auto;
+    padding: 10px 0;
+}
+.dashboard-container {
+    animation: fadeIn 0.5s ease-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.db-greeting {
-    margin-bottom: 32px;
-}
-.db-greeting h2 {
-    font-size: 28px;
-    font-weight: 800;
-    color: #0f172a;
-    margin: 0 0 6px 0;
-}
-.db-greeting p {
-    font-size: 15px;
-    color: #64748b;
-    margin: 0;
-}
-
-/* --- STAT CARDS --- */
-.stat-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-bottom: 36px;
-}
-.stat-card {
-    border-radius: 16px;
-    padding: 26px 24px;
-    color: white;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+.slim-header {
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
-    min-height: 140px;
+    align-items: center;
+    padding: 15px 4px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #f1f5f9;
 }
-.stat-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 32px rgba(0,0,0,0.18);
+.slim-greeting h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a1a;
 }
-.stat-card::before {
-    content: "";
-    position: absolute;
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.12);
-    top: -30px;
-    right: -30px;
-}
-.stat-card::after {
-    content: "";
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-    bottom: -20px;
-    right: 30px;
-}
-.stat-card-1 { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-.stat-card-2 { background: linear-gradient(135deg, #f43f5e, #be123c); }
-.stat-card-3 { background: linear-gradient(135deg, #f59e0b, #d97706); }
-.stat-card-4 { background: linear-gradient(135deg, #10b981, #059669); }
-
-.stat-label {
-    font-size: 13px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    opacity: 0.85;
-}
-.stat-number {
-    font-size: 48px;
-    font-weight: 800;
-    line-height: 1;
-    margin: 8px 0 4px 0;
-}
-.stat-sub {
+.slim-greeting p {
+    margin: 0;
     font-size: 12px;
-    opacity: 0.75;
+    color: #94a3b8;
 }
-.stat-icon {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    opacity: 0.25;
-    font-size: 48px;
+
+.pill-stats {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 2px 0 20px 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 }
+.pill-stats::-webkit-scrollbar { display: none; }
+.pill-item {
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    padding: 8px 16px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+.pill-item:hover { background: #fff; border-color: #000; }
+.pill-label { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+.pill-value { font-size: 15px; font-weight: 800; color: #1a1a1a; }
+
+/* STATS DROPPED REPLACED BY PILLS */
+.stats-grid { display: none; }
+
+/* LAYOUT GRID */
+.db-main-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 32px;
+    align-items: start;
+}
+
+@media (max-width: 1200px) {
+    .db-main-grid { grid-template-columns: 1fr; }
+}
+
+/* SIDEBAR CARD */
+.db-side-card {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(0,0,0,0.03);
+}
+.activity-list { list-style: none; padding: 0; margin: 0; }
+.activity-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    gap: 12px;
+}
+.activity-item:last-child { border-bottom: none; }
+.activity-dot {
+    width: 8px; height: 8px; border-radius: 50%; background: #e2e8f0; margin-top: 6px; flex-shrink: 0;
+}
+.activity-content p { margin: 0; font-size: 13px; color: #1a1a1a; line-height: 1.4; }
+.activity-content small { color: #94a3b8; font-size: 11px; }
 
 /* --- RECENT TABLE --- */
 .db-section-title {
@@ -154,25 +150,26 @@ include ROOTPATH . "/layouts/header.php";
     border-collapse: collapse;
 }
 .db-table th {
-    background: #f8fafc;
-    color: #475569;
-    padding: 14px 20px;
-    font-size: 12px;
-    font-weight: 700;
+    background: #1a1a1a;
+    color: #fff;
+    padding: 16px 20px;
+    font-size: 11px;
+    font-weight: 600;
     text-align: left;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    border-bottom: 1px solid #e2e8f0;
+    letter-spacing: 1.5px;
+    border-bottom: none;
 }
 .db-table td {
-    padding: 15px 20px;
+    padding: 16px 20px;
     border-bottom: 1px solid #f1f5f9;
     font-size: 14px;
     color: #334155;
     vertical-align: middle;
 }
+.db-table tr:nth-child(even) td { background: #fcfcfc; }
 .db-table tr:last-child td { border-bottom: none; }
-.db-table tr:hover td { background: #f8fafc; }
+.db-table tr:hover td { background: #f8fafc !important; }
 .student-name-cell { font-weight: 600; color: #0f172a; }
 .student-class { font-size: 12px; color: #94a3b8; margin-top: 2px; }
 .poin-chip {
@@ -189,91 +186,216 @@ include ROOTPATH . "/layouts/header.php";
 .date-cell { font-size: 13px; color: #94a3b8; }
 .no-data { text-align:center; padding: 48px; color: #cbd5e1; font-style: italic; }
 
-@media(max-width:900px) {
-    .stat-grid { grid-template-columns: repeat(2, 1fr); }
-    .db-page { padding: 16px; }
-}
-@media(max-width:500px) {
-    .stat-grid { grid-template-columns: 1fr; }
+@media(max-width: 768px) {
+    .db-page { padding: 8px 12px; background: #fff; }
+    
+    .slim-header {
+        border: none;
+        padding: 5px 0 10px 0;
+        margin-bottom: 5px;
+    }
+    .slim-greeting h2 { font-size: 13px; font-weight: 800; }
+    .slim-greeting p { font-size: 10px; }
+
+    .pill-stats { padding-bottom: 12px; }
+    .pill-item { padding: 6px 12px; }
+    .pill-label { font-size: 9px; }
+    .pill-value { font-size: 13px; }
+
+    /* MOBILE SLIM STATS GRID */
+    .stats-grid { 
+        display: grid; 
+        grid-template-columns: repeat(4, 1fr); 
+        gap: 6px; 
+        background: #f8fafc;
+        border-radius: 12px;
+        padding: 12px;
+        margin-top: 5px;
+        width: 100%;
+        border: 1px solid #f1f5f9;
+        margin-bottom: 24px;
+    }
+    .stat-card { 
+        background: transparent !important; 
+        box-shadow: none !important; 
+        border: none !important;
+        padding: 0 !important;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 2px;
+    }
+    .stat-card:not(:last-child) { border-right: 1px solid #e2e8f0 !important; border-bottom: none !important; border-radius: 0; }
+
+    .stat-icon { display: none; }
+    .stat-info h3 { font-size: 8px; opacity: 0.6; color: #64748b; font-weight: 700; margin-bottom: 0; }
+    .stat-info .num { font-size: 16px; color: #1a1a1a; margin: 0; font-weight: 800; letter-spacing: -0.5px; }
+    .stat-trend { display: none; }
+
+    .db-content-left { padding: 0; }
+    .db-section-title { 
+        margin-bottom: 12px; 
+        font-size: 14px; 
+        padding: 0 4px; 
+        border: none;
+    }
+    .db-section-title span { display: none; }
+    
+    /* MODERN LIST (ACTIVITY) */
+    .db-content-right { padding: 24px 0 10px 0; }
+    .db-side-card { 
+        background: transparent; 
+        box-shadow: none; 
+        border: none; 
+        padding: 0; 
+    }
+    .activity-item { padding: 10px 4px; border-bottom: 0.5px solid #f1f5f9; gap: 8px; }
+    .activity-dot { background: #cbd5e1; width: 5px; height: 5px; margin-top: 5px; }
+    .activity-content p { font-size: 12px; }
+    .activity-content small { font-size: 10px; }
+    
+    /* TABLE POLISH - SLIM LIST LOOK */
+    .table-responsive {
+        border-radius: 12px;
+        border: none;
+        background: transparent;
+    }
+    .db-table th { display: none; }
+    .db-table td { 
+        padding: 12px 8px; 
+        font-size: 12px; 
+        border-bottom: 0.5px solid #f8fafc;
+    }
+    .stat-blue, .stat-green, .stat-yellow, .stat-red { border: none; }
+    
+    .btn-mobile-full { 
+        background: #f8fafc !important; 
+        border: 1px solid #f1f5f9 !important;
+        margin-top: 10px !important;
+        padding: 10px !important;
+        font-size: 12px !important;
+    }
+
+    /* MODERN LIST TABLE TRANSFORMATION */
+    .mobile-row { display: block !important; padding: 12px 4px !important; position: relative; }
+    .mobile-row td { display: block !important; padding: 2px 0 !important; border: none !important; width: 100% !important; background: transparent !important; }
+    .mobile-row .date-cell { font-size: 10px; color: #94a3b8; margin-bottom: 2px; order: 1; }
+    .mobile-row .student-cell { order: 2; margin-bottom: 4px; }
+    .mobile-row .type-cell { order: 3; display: inline-block !important; width: auto !important; margin-right: 8px; }
+    .mobile-row .poin-cell { order: 4; display: inline-block !important; width: auto !important; position: absolute; right: 4px; top: 25px; }
+    .m-lbl { display: none; }
 }
 </style>
 
 <div class="db-page">
+    <div class="dashboard-container">
 
-    <div class="db-greeting">
-        <h2>Selamat Datang, <?= htmlspecialchars($_COOKIE['nama'] ?? 'Admin') ?></h2>
-        <p><?= date('l, d F Y') ?> &mdash; Sistem Informasi Pelanggaran Siswa</p>
+        <div class="slim-header">
+            <div class="slim-greeting">
+                <h2>Halo, <?= htmlspecialchars($_COOKIE['nama'] ?? 'Admin') ?></h2>
+                <p><?= tanggal_indonesia(date('Y-m-d')) ?> &mdash; Dashboard</p>
+            </div>
+        </div>
+
+        <div class="pill-stats">
+            <div class="pill-item">
+                <i class="fa-solid fa-user-group" style="font-size: 10px; opacity: 0.5;"></i>
+                <span class="pill-label">Total Siswa</span>
+                <span class="pill-value"><?= $tot_siswa ?></span>
+            </div>
+            <div class="pill-item">
+                <i class="fa-solid fa-triangle-exclamation" style="font-size: 10px; opacity: 0.5;"></i>
+                <span class="pill-label">Poin (Bulan Ini)</span>
+                <span class="pill-value"><?= $tot_pelanggaran ?></span>
+            </div>
+            <div class="pill-item">
+                <i class="fa-solid fa-envelope" style="font-size: 10px; opacity: 0.5;"></i>
+                <span class="pill-label">Surat Keluar</span>
+                <span class="pill-value"><?= $tot_surat ?></span>
+            </div>
+            <div class="pill-item">
+                <i class="fa-solid fa-file-contract" style="font-size: 10px; opacity: 0.5;"></i>
+                <span class="pill-label">Proses Janji</span>
+                <span class="pill-value"><?= $tot_proses ?></span>
+            </div>
+        </div>
+
+        <div class="db-main-grid">
+            <div class="db-content-left">
+                <h3 class="db-section-title">
+                    Detail Pelanggaran <span>Terbaru</span>
+                </h3>
+                <div class="db-table-card">
+                    <div class="table-responsive">
+                        <table class="db-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%;">Tanggal</th>
+                                    <th style="width: 35%;">Nama Siswa</th>
+                                    <th style="width: 30%;">Pelanggaran</th>
+                                    <th style="width: 15%;">Poin</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        <?php
+                        $found = false;
+                        while ($row = mysqli_fetch_assoc($q_latest)):
+                            $found = true;
+                            $poin = (int)$row['poin'];
+                            
+                            $chip = '';
+                            if ($poin >= 50) $chip = 'poin-b';
+                            else if ($poin >= 20) $chip = 'poin-s';
+                            else $chip = 'poin-r';
+                            
+                            $kelas = $row['tingkat'] . ' ' . $row['program_keahlian'] . ' ' . $row['rombel'];
+                        ?>
+                        <tr class="mobile-row">
+                            <td class="date-cell">
+                                <span class="m-lbl">Tgl:</span> <?= date('d M Y', strtotime($row['tanggal'])) ?>
+                            </td>
+                            <td class="student-cell">
+                                <div class="student-info">
+                                    <strong><?= htmlspecialchars($row['nama_siswa']) ?></strong>
+                                    <span><?= htmlspecialchars($kelas) ?></span>
+                                </div>
+                            </td>
+                            <td class="type-cell"><span class="badge-jenis"><?= htmlspecialchars($row['jenis']) ?></span></td>
+                            <td class="poin-cell"><span class="badge-poin <?= $chip ?>">+<?= $poin ?></span></td>
+                        </tr>
+                        <?php endwhile;
+                        if (!$found): ?>
+                        <tr><td style="text-align:center; padding: 48px; color: #cbd5e1; font-style: italic;">Belum ada pelanggaran tercatat.</td></tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
-    <div class="stat-grid">
-        <div class="stat-card stat-card-1">
-            <div class="stat-label">Total Siswa Aktif</div>
-            <div class="stat-number"><?= $tot_siswa ?></div>
-            <div class="stat-sub">Terdaftar dalam sistem</div>
-            <div class="stat-icon">&#x1F393;</div>
-        </div>
-        <div class="stat-card stat-card-2">
-            <div class="stat-label">Pelanggaran Bulan Ini</div>
-            <div class="stat-number"><?= $tot_pelanggaran ?></div>
-            <div class="stat-sub"><?= date('F Y') ?></div>
-            <div class="stat-icon">&#x26A0;</div>
-        </div>
-        <div class="stat-card stat-card-3">
-            <div class="stat-label">Total Surat Keluar</div>
-            <div class="stat-number"><?= $tot_surat ?></div>
-            <div class="stat-sub">Seluruh periode</div>
-            <div class="stat-icon">&#x1F4C4;</div>
-        </div>
-        <div class="stat-card stat-card-4">
-            <div class="stat-label">Perjanjian Proses</div>
-            <div class="stat-number"><?= $tot_proses ?></div>
-            <div class="stat-sub">Menunggu penyelesaian</div>
-            <div class="stat-icon">&#x23F3;</div>
-        </div>
-    </div>
-
-    <h3 class="db-section-title">
-        Pelanggaran Terbaru <span>7 Terakhir</span>
-    </h3>
-    <div class="db-table-card">
-        <table class="db-table">
-            <thead>
-                <tr>
-                    <th>Tanggal</th>
-                    <th>Siswa</th>
-                    <th>Jenis Pelanggaran</th>
-                    <th>Poin</th>
-                </tr>
-            </thead>
-            <tbody>
+    <div class="db-content-right">
+        <h3 class="db-section-title">Aktivitas Sistem</h3>
+        <div class="db-side-card">
+            <div class="activity-list">
                 <?php
-                $found = false;
-                while ($row = mysqli_fetch_assoc($q_latest)):
-                    $found = true;
-                    $poin = (int)$row['poin'];
-                    $chip = ($poin >= 50) ? 'poin-high' : (($poin >= 20) ? 'poin-mid' : 'poin-low');
-                    $kelas = $row['tingkat'] . ' ' . $row['program_keahlian'] . ' ' . $row['rombel'];
+                // Get latest 5 activities (from pelanggaran_siswa and surat_keluar hypothetically)
+                $q_act = mysqli_query($conn, "SELECT ps.tanggal, s.nama_siswa, 'Input Pelanggaran' as act FROM pelanggaran_siswa ps JOIN siswa s ON ps.nis=s.nis ORDER BY ps.tanggal DESC LIMIT 5");
+                while($act = mysqli_fetch_assoc($q_act)):
                 ?>
-                <tr>
-                    <td class="date-cell">
-                        <?= date('d M Y', strtotime($row['tanggal'])) ?><br>
-                        <small><?= date('H:i', strtotime($row['tanggal'])) ?></small>
-                    </td>
-                    <td>
-                        <div class="student-name-cell"><?= htmlspecialchars($row['nama_siswa']) ?></div>
-                        <div class="student-class"><?= htmlspecialchars($kelas) ?></div>
-                    </td>
-                    <td class="jenis-text"><?= htmlspecialchars($row['jenis']) ?></td>
-                    <td><span class="poin-chip <?= $chip ?>"><?= $poin ?> poin</span></td>
-                </tr>
-                <?php endwhile;
-                if (!$found): ?>
-                <tr><td colspan="4" class="no-data">Belum ada pelanggaran tercatat.</td></tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                <div class="activity-item">
+                    <div class="activity-dot"></div>
+                    <div class="activity-content">
+                        <p><strong><?= htmlspecialchars($act['nama_siswa']) ?></strong> - <?= $act['act'] ?></p>
+                        <small><?= date('d M, H:i', strtotime($act['tanggal'])) ?></small>
+                    </div>
+                </div>
+                <?php endwhile; ?>
+            </div>
+            <a href="#" class="btn-mobile-full" style="display:block; text-align:center; margin-top:20px; font-size:12px; font-weight:700; color:#1a1a1a; text-decoration:none; opacity:0.6;">LIHAT SEMUA</a>
+        </div>
     </div>
-
+</div>
+</div>
 </div>
 
 <?php include ROOTPATH . "/layouts/footer.php"; ?>
